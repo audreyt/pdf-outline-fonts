@@ -72,4 +72,4 @@ mutool draw -o page1.png deck.outlined.pdf 1
 
 ## License
 
-MIT
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) — public domain dedication.

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: CC0-1.0
 """Selectively convert specific PDF fonts to vector outlines.
 
 Use this when a PDF embeds a licensed font that you can't redistribute (or just
