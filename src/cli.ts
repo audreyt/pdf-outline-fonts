@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { Command } from "commander";
 import { formatNoFontsMatched, NoFontsMatchedError, outlinePdf } from "./pdf";
 
@@ -39,12 +39,17 @@ if (!existsSync(input)) {
 }
 
 try {
-  outlinePdf(input, output, {
+  const verbose = !opts.quiet;
+  const { output: bytes } = outlinePdf(new Uint8Array(readFileSync(input)), {
     prefixes: opts.prefix,
     exacts: opts.exact,
     selectionFont: opts.noSelectionLayer ? null : opts.selectionFont,
-    verbose: !opts.quiet,
+    verbose,
   });
+  writeFileSync(output, bytes);
+  if (verbose) {
+    console.log(`saved -> ${output}`);
+  }
 } catch (error) {
   if (error instanceof NoFontsMatchedError) {
     console.error(formatNoFontsMatched(error));

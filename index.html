@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pdf-outline-fonts</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>pdf-outline-fonts</h1>
+        <p>
+          Convert specific PDF fonts to vector outlines, in your browser. The
+          file never leaves this page. Defaults to every font whose BaseFont
+          starts with <code>jf-</code>.
+        </p>
+      </header>
+
+      <section id="drop" class="drop">
+        <p>Drop a PDF here, or click to choose.</p>
+        <input id="file" type="file" accept="application/pdf,.pdf" hidden />
+      </section>
+
+      <section class="config">
+        <label>
+          Prefixes
+          <input
+            id="prefixes"
+            type="text"
+            value="jf-"
+            placeholder="jf-, gen-"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+          />
+        </label>
+        <label>
+          Exact BaseFonts
+          <input
+            id="exacts"
+            type="text"
+            value=""
+            placeholder="MyFont-Bold"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+          />
+        </label>
+        <label class="checkbox">
+          <input id="selectionLayer" type="checkbox" checked />
+          Add invisible selection layer (Droid Sans Fallback)
+        </label>
+      </section>
+
+      <p id="status" class="status"></p>
+
+      <a id="download" class="download" hidden>Download outlined PDF</a>
+
+      <pre id="log" class="log"></pre>
+
+      <footer>
+        <p>
+          <a href="https://github.com/audreyt/pdf-outline-fonts">Source on GitHub</a>
+          · CC0 1.0
+        </p>
+      </footer>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "mupdf": "https://esm.sh/mupdf@1.27.0?bundle"
+        }
+      }
+    </script>
+    <script type="module" src="./web.js"></script>
+  </body>
+</html>

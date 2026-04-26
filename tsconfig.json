@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "DOM"],
     "module": "Preserve",
     "moduleResolution": "Bundler",
     "noEmit": true,

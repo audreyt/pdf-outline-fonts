@@ -73,9 +73,9 @@ export function normalizeSelectionFontName(name: string): string {
   return aliases[name] ?? name;
 }
 
-export function outlinePdf(inputPath: string, outputPath: string, options: OutlineOptions): OutlineResult {
+export function outlinePdf(input: Uint8Array, options: OutlineOptions): { output: Uint8Array; result: OutlineResult } {
   const verbose = options.verbose ?? true;
-  const doc = new mupdf.PDFDocument(inputPath);
+  const doc = new mupdf.PDFDocument(input);
   const targetInfo = loadTargetFonts(doc, options.prefixes, options.exacts, verbose);
 
   if (targetInfo.length === 0) {
@@ -225,21 +225,20 @@ export function outlinePdf(inputPath: string, outputPath: string, options: Outli
     }
   }
 
-  doc.save(outputPath, {
+  const saved = doc.saveToBuffer({
     garbage: 4,
     deflate: true,
     deflateFonts: true,
     clean: true,
   });
 
-  if (verbose) {
-    console.log(`saved -> ${outputPath}`);
-  }
-
   return {
-    fontsOutlined: targetInfo.map((info) => info.name),
-    pagesChanged,
-    glyphCount,
+    output: new Uint8Array(saved.asUint8Array()),
+    result: {
+      fontsOutlined: targetInfo.map((info) => info.name),
+      pagesChanged,
+      glyphCount,
+    },
   };
 }
 

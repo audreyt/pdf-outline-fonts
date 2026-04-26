@@ -33,6 +33,10 @@ Fonts that don't match the prefix or exact-name list are left as-is.
 - The invisible-selection layer adds a subsetted Droid Sans Fallback font to the
   output. Use `--no-selection-layer` to skip it.
 
+## Use in browser
+
+[audreyt.github.io/pdf-outline-fonts](https://audreyt.github.io/pdf-outline-fonts/) — drop a PDF, get the outlined version back. Defaults to every font whose BaseFont starts with `jf-`. The file never leaves your browser.
+
 ## Install
 
 Requires Bun.
@@ -69,6 +73,9 @@ bun run typecheck
 
 # mutation testing
 bun run stryker
+
+# rebuild the browser bundle (web.js) — only needed if src/web.ts changes
+bun run build:web
 ```
 
 ## License

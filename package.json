@@ -10,6 +10,8 @@
     "outline": "bun run src/cli.ts",
     "test": "bun test",
     "typecheck": "tsc --noEmit",
+    "build:web": "bun build src/web.ts --target=browser --outfile=web.js --minify --external mupdf",
+    "serve": "bun --bun x http-server -p 8000 -c-1 .",
     "stryker": "stryker run"
   },
   "dependencies": {
