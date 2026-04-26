@@ -1,0 +1,25 @@
+{
+  "name": "pdf-outline-fonts",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "outline-pdf-fonts": "./src/cli.ts"
+  },
+  "scripts": {
+    "outline": "bun run src/cli.ts",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "stryker": "stryker run"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "mupdf": "^1.27.0"
+  },
+  "devDependencies": {
+    "@stryker-mutator/core": "^9.6.1",
+    "@stryker-mutator/typescript-checker": "^9.6.1",
+    "@types/bun": "^1.3.13",
+    "typescript": "^6.0.3"
+  }
+}

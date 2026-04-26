@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "command",
+  "commandRunner": {
+    "command": "bun test"
+  },
+  "checkers": ["typescript"],
+  "tsconfigFile": "tsconfig.json",
+  "coverageAnalysis": "off",
+  "mutate": ["src/cff.ts", "src/cmap.ts", "src/names.ts", "src/pdf-path.ts"],
+  "reporters": ["clear-text", "progress"],
+  "tempDirName": ".stryker-tmp"
+}

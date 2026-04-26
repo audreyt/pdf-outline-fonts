@@ -2,5 +2,9 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+node_modules/
+.stryker-tmp/
+reports/
+coverage/
 *.outlined.pdf
 .DS_Store
