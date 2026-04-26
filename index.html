@@ -10,7 +10,7 @@
     <main>
       <header>
         <h1>pdf-outline-fonts</h1>
-        <p>
+        <p data-i18n="intro">
           Convert specific PDF fonts to vector outlines, in your browser. The
           file never leaves this page. Defaults to every font whose BaseFont
           starts with <code>jf-</code>.
@@ -18,30 +18,32 @@
       </header>
 
       <section id="drop" class="drop">
-        <p>Drop a PDF here, or click to choose.</p>
+        <p data-i18n="drop">Drop a PDF here, or click to choose.</p>
         <input id="file" type="file" accept="application/pdf,.pdf" hidden />
       </section>
 
       <section class="config">
         <label>
-          Prefixes
+          <span data-i18n="prefixesLabel">Prefixes</span>
           <input
             id="prefixes"
             type="text"
             value="jf-"
             placeholder="jf-, gen-"
+            data-i18n-placeholder="prefixesPlaceholder"
             spellcheck="false"
             autocapitalize="off"
             autocomplete="off"
           />
         </label>
         <label>
-          Exact BaseFonts
+          <span data-i18n="exactsLabel">Exact BaseFonts</span>
           <input
             id="exacts"
             type="text"
             value=""
             placeholder="MyFont-Bold"
+            data-i18n-placeholder="exactsPlaceholder"
             spellcheck="false"
             autocapitalize="off"
             autocomplete="off"
@@ -49,19 +51,19 @@
         </label>
         <label class="checkbox">
           <input id="selectionLayer" type="checkbox" checked />
-          Add invisible selection layer (Droid Sans Fallback)
+          <span data-i18n="selectionLayer">Add invisible selection layer (Droid Sans Fallback)</span>
         </label>
       </section>
 
       <p id="status" class="status"></p>
 
-      <a id="download" class="download" hidden>Download outlined PDF</a>
+      <a id="download" class="download" hidden data-i18n="download">Download outlined PDF</a>
 
       <pre id="log" class="log"></pre>
 
       <footer>
         <p>
-          <a href="https://github.com/audreyt/pdf-outline-fonts">Source on GitHub</a>
+          <a href="https://github.com/audreyt/pdf-outline-fonts" data-i18n="sourceLink">Source on GitHub</a>
           · CC0 1.0
         </p>
       </footer>
@@ -70,7 +72,7 @@
     <script type="importmap">
       {
         "imports": {
-          "mupdf": "https://esm.sh/mupdf@1.27.0?bundle"
+          "mupdf": "https://cdn.jsdelivr.net/npm/mupdf@1.27.0/dist/mupdf.js"
         }
       }
     </script>

@@ -1,3 +1,4 @@
+import { pickStrings, type Strings } from "./i18n";
 import { formatNoFontsMatched, NoFontsMatchedError, outlinePdf, type OutlineOptions } from "./pdf";
 
 interface RunOptions {
@@ -17,7 +18,9 @@ interface DomRefs {
   download: HTMLAnchorElement;
 }
 
-const STATUS_IDLE = "Drop a PDF or click to choose. Default: outline every font whose BaseFont starts with jf-.";
+const t: Strings = pickStrings(navigator.languages?.length ? navigator.languages : [navigator.language ?? "en"]);
+
+applyTranslations(t);
 
 const refs: DomRefs = {
   drop: required("drop"),
@@ -32,7 +35,7 @@ const refs: DomRefs = {
 
 let lastDownloadUrl: string | null = null;
 
-setStatus(STATUS_IDLE);
+setStatus(t.statusIdle);
 
 refs.fileInput.addEventListener("change", () => {
   const file = refs.fileInput.files?.[0];
@@ -66,18 +69,18 @@ refs.drop.addEventListener("drop", (event: DragEvent) => {
 
 async function run(file: File): Promise<void> {
   if (!file.name.toLowerCase().endsWith(".pdf")) {
-    setStatus(`Not a PDF: ${file.name}`);
+    setStatus(t.statusNotPdf(file.name));
     return;
   }
 
   resetDownload();
-  setStatus(`Reading ${file.name}…`);
+  setStatus(t.statusReading(file.name));
   refs.log.textContent = "";
 
   const buffer = new Uint8Array(await file.arrayBuffer());
   const opts = readOptions();
 
-  setStatus(`Outlining ${file.name}…`);
+  setStatus(t.statusOutlining(file.name));
   await yieldToPaint();
 
   try {
@@ -88,17 +91,15 @@ async function run(file: File): Promise<void> {
     refs.download.download = suggestOutputName(file.name);
     refs.download.hidden = false;
 
-    setStatus(
-      `Done: outlined ${result.glyphCount} glyph(s) across ${result.pagesChanged} page(s). Click below to download.`,
-    );
-    refs.log.textContent = `Fonts outlined:\n  ${result.fontsOutlined.join("\n  ")}`;
+    setStatus(t.statusDone(result.glyphCount, result.pagesChanged));
+    refs.log.textContent = `${t.fontsOutlinedHeader}\n  ${result.fontsOutlined.join("\n  ")}`;
   } catch (error) {
     if (error instanceof NoFontsMatchedError) {
-      setStatus("No fonts matched the current prefixes / exacts.");
+      setStatus(t.statusNoFonts);
       refs.log.textContent = formatNoFontsMatched(error);
       return;
     }
-    setStatus(`Failed: ${(error as Error).message}`);
+    setStatus(t.statusFailed((error as Error).message));
     refs.log.textContent = (error as Error).stack ?? "";
     throw error;
   }
@@ -155,4 +156,27 @@ function required<T extends HTMLElement = HTMLElement>(id: string): T {
     throw new Error(`missing required element: #${id}`);
   }
   return el as T;
+}
+
+function applyTranslations(strings: Strings): void {
+  document.documentElement.lang = strings.htmlLang;
+  document.title = strings.pageTitle;
+
+  document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (!key) return;
+    const value = (strings as unknown as Record<string, unknown>)[key];
+    if (typeof value === "string") {
+      el.innerHTML = value;
+    }
+  });
+
+  document.querySelectorAll<HTMLInputElement>("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (!key) return;
+    const value = (strings as unknown as Record<string, unknown>)[key];
+    if (typeof value === "string") {
+      el.placeholder = value;
+    }
+  });
 }
