@@ -9,6 +9,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
     "strict": true,
     "target": "ES2023",
     "types": ["bun"]
